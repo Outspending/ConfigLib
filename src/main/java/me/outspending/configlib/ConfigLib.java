@@ -1,14 +1,14 @@
 package me.outspending.configlib;
 
+import me.outspending.configlib.examples.ConfigExample;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.Yaml;
 
 public final class ConfigLib extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ConfigLoader.constructClass(new Testing(), YamlConfiguration.class);
+        ConfigLoader.constructClass(new ConfigExample(), YamlConfiguration.class);
 
     }
 

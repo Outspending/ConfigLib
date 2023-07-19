@@ -21,6 +21,7 @@ public class SerializationHandler {
         // TODO: Add List serialization and Set serialization
     }
 
+    @SuppressWarnings("unchecked")
     public static <T> SerializationType<T> getSerializationType(Class<T> clazz) {
         return (SerializationType<T>) serializationMap.get(clazz);
     }
