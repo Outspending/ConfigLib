@@ -1,0 +1,4 @@
+name: ConfigLib
+version: '${version}'
+main: me.outspending.configlib.ConfigLib
+api-version: '1.19'
