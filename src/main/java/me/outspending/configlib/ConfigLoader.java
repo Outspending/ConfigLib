@@ -12,9 +12,13 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConfigLoader {
+
+    private static final Map<String, ConfigFile<?>> configFiles = new HashMap<>();
 
     private static @NotNull Field[] getAnnotatedFields(ConfigClass configClass) {
         List<Field> fields = new ArrayList<>();
@@ -29,7 +33,7 @@ public class ConfigLoader {
         return fields.toArray(new Field[0]);
     }
 
-    public static <V> @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass, Class<V> type) {
+    public static <V> @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass) {
         List<CachedConfigField<?>> configFields = new ArrayList<>();
         Class<? extends ConfigClass> clazz = configClass.getClass();
 
@@ -57,19 +61,15 @@ public class ConfigLoader {
         return configFields;
     }
 
-    public static void createConfig(@NotNull ConfigFile<?> configFile, @NotNull List<CachedConfigField<?>> cachedFields) {
-        ConfigCreator.writeFile(configFile, cachedFields);
-    }
-
-    public static void createConfig(@NotNull ConfigFile<?> configFile, @NotNull ConfigClass configClass) {
-        createConfig(configFile, constructClass(configClass, configClass.getClass()));
-    }
-
     public static <T> T parseValue(Class<T> typeClass, String value) {
         return SerializationHandler.parse(typeClass, value);
     }
 
     public static ConfigInstance getInstance() {
         return new ConfigInstance();
+    }
+
+    public static Map<String, ConfigFile<?>> getConfigFiles() {
+        return configFiles;
     }
 }
