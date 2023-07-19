@@ -1,4 +1,4 @@
-package me.outspending.configlib;
+package me.outspending.configlib.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

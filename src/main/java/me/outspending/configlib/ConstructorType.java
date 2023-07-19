@@ -1,5 +1,6 @@
 package me.outspending.configlib;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,10 @@ import java.util.List;
 public abstract class ConstructorType<K, V> {
 
     private final List<V> configFields = new ArrayList<>();
+
+    // TODO: Make this a FileConfiguration
+    private final File file = null;
+
     private final K key;
     private final V value;
 
@@ -26,5 +31,9 @@ public abstract class ConstructorType<K, V> {
 
     public V getValue() {
         return value;
+    }
+
+    public List<V> getConfigFields() {
+        return configFields;
     }
 }

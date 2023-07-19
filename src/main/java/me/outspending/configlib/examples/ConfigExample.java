@@ -1,6 +1,6 @@
 package me.outspending.configlib.examples;
 
-import me.outspending.configlib.Comments;
+import me.outspending.configlib.annotations.Comments;
 import me.outspending.configlib.annotations.Config;
 import me.outspending.configlib.ConfigClass;
 import me.outspending.configlib.annotations.ConfigValue;
