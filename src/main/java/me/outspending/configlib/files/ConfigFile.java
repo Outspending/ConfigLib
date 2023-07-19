@@ -16,4 +16,8 @@ public interface ConfigFile<T> {
 
     File getFile();
 
+    String getFileName();
+
+    void checkFile();
+
 }

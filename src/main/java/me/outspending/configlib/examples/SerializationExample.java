@@ -23,9 +23,4 @@ public class SerializationExample implements SerializationType<List<String>> {
     public @NotNull String serialize(List<String> value) {
         return null;
     }
-
-    @Override
-    public void addToConfig(ConfigFile<?> configFile) {
-
-    }
 }

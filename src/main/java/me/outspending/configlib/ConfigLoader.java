@@ -30,7 +30,7 @@ public class ConfigLoader {
         return fields.toArray(new Field[0]);
     }
 
-    public static <V> @NotNull ConstructorType<? super V, ?> constructClass(ConfigClass configClass, Class<V> type) {
+    public static <V> @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass, Class<V> type) {
         List<CachedConfigField<?>> configFields = new ArrayList<>();
         Class<? extends ConfigClass> clazz = configClass.getClass();
 
@@ -38,20 +38,25 @@ public class ConfigLoader {
             Bukkit.getLogger().info("Found annotated class: " + clazz.getName());
             Field[] annotatedVariables = getAnnotatedFields(configClass);
             for (Field field : annotatedVariables) {
+                field.setAccessible(true);
 
-                ConfigValue value = field.getAnnotation(ConfigValue.class);
-                Class<?> fieldType = field.getType();
-                CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), fieldType);
+                try {
+                    Object obj = field.get(configClass);
+                    ConfigValue value = field.getAnnotation(ConfigValue.class);
+                    CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), obj, clazz.getName());
 
-                if (field.isAnnotationPresent(Comments.class)) {
-                    Comments annotation = field.getAnnotation(Comments.class);
-                    cachedConfigField.setComments(List.of(annotation.value()));
+                    if (field.isAnnotationPresent(Comments.class)) {
+                        Comments annotation = field.getAnnotation(Comments.class);
+                        cachedConfigField.setComments(List.of(annotation.value()));
+                    }
+
+                    configFields.add(cachedConfigField);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
                 }
-
-                configFields.add(cachedConfigField);
             }
         }
-        return new YamlConstructor<>(type, configFields);
+        return configFields;
     }
 
     public static void createConfig(@NotNull ConfigFile<?> configFile, @NotNull List<CachedConfigField<?>> cachedFields) {
