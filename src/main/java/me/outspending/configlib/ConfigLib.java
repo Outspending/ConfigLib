@@ -12,9 +12,7 @@ public final class ConfigLib extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        YamlFile file = new YamlFile(getDataFolder(), "config.yml");
-        List<CachedConfigField<?>> cachedConfigFields = ConfigLoader.constructClass(new ConfigExample(), YamlConfiguration.class);
-        ConfigLoader.createConfig(file, cachedConfigFields);
+        ConfigLoader.createConfig(new YamlFile(getDataFolder(), "config.yml"), new ConfigExample());
     }
 
     @Override

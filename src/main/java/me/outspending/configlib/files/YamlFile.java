@@ -4,6 +4,7 @@ import me.outspending.configlib.CachedConfigField;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.YamlConfigurationOptions;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +20,6 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     public YamlFile(File file, String fileName) {
         this.file = file;
         this.defaultFile = new File(file, fileName);
-        Bukkit.getLogger().info(this.file.getAbsoluteFile().toString());
         this.configuration = YamlConfiguration.loadConfiguration(defaultFile);
         this.fileName = fileName;
     }
@@ -28,8 +28,9 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     public void addField(String path, CachedConfigField<?> cachedConfigField) {
         configuration.set(path, cachedConfigField.getValue());
 
-        if (cachedConfigField.hasComments())
+        if (cachedConfigField.hasComments()) {
             configuration.setComments(path, cachedConfigField.getComments());
+        }
     }
 
     @Override

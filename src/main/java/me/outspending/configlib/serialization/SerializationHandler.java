@@ -31,4 +31,9 @@ public class SerializationHandler {
     public static <T> T parse(Class<T> clazz, String value) {
         return (T) getSerializationType(clazz).parse(value);
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T> SerializationType<T> registerSerializationType(Class<T> clazz, SerializationType<T> serializationType) {
+        return (SerializationType<T>) serializationMap.put(clazz, serializationType);
+    }
 }

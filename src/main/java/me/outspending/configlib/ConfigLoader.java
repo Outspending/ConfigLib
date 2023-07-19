@@ -24,7 +24,6 @@ public class ConfigLoader {
             ConfigValue value = field.getAnnotation(ConfigValue.class);
             if (value != null && !Modifier.isFinal(field.getModifiers())) {
                 fields.add(field);
-                Bukkit.getLogger().info("Found annotated field: " + field.getName() + ", Value: " + field.getAnnotation(ConfigValue.class).value() + ", Type: " + field.getType().getName());
             }
         }
         return fields.toArray(new Field[0]);
@@ -35,7 +34,6 @@ public class ConfigLoader {
         Class<? extends ConfigClass> clazz = configClass.getClass();
 
         if (clazz.isAnnotationPresent(Config.class)) {
-            Bukkit.getLogger().info("Found annotated class: " + clazz.getName());
             Field[] annotatedVariables = getAnnotatedFields(configClass);
             for (Field field : annotatedVariables) {
                 field.setAccessible(true);
@@ -61,6 +59,10 @@ public class ConfigLoader {
 
     public static void createConfig(@NotNull ConfigFile<?> configFile, @NotNull List<CachedConfigField<?>> cachedFields) {
         ConfigCreator.writeFile(configFile, cachedFields);
+    }
+
+    public static void createConfig(@NotNull ConfigFile<?> configFile, @NotNull ConfigClass configClass) {
+        createConfig(configFile, constructClass(configClass, configClass.getClass()));
     }
 
     public static <T> T parseValue(Class<T> typeClass, String value) {

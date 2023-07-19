@@ -22,11 +22,8 @@ import me.outspending.configlib.annotations.ConfigValue;
 @Config
 public class ConfigExample implements ConfigClass {
 
-    @ConfigValue("test-testing")
-    @Comments({"line 1 of comment", "line 2 of comment"})
-    private String test = "test";
-
     @ConfigValue("testing-value")
+    @Comments({"line 1 of comment", "line 2 of comment"})
     private String testing = "ew";
 
     /*
