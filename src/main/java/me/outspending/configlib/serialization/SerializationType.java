@@ -1,7 +1,5 @@
 package me.outspending.configlib.serialization;
 
-import me.outspending.configlib.CachedConfigField;
-import me.outspending.configlib.files.ConfigFile;
 import org.jetbrains.annotations.NotNull;
 
 public interface SerializationType<T> {
@@ -20,5 +18,5 @@ public interface SerializationType<T> {
      * @param value
      * @return
      */
-    @NotNull String serialize(T value);
+    @NotNull String serialize(Object value);
 }

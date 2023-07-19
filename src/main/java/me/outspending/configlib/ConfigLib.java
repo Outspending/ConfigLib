@@ -1,6 +1,7 @@
 package me.outspending.configlib;
 
 import me.outspending.configlib.examples.ConfigExample;
+import me.outspending.configlib.files.ConfigFile;
 import me.outspending.configlib.files.YamlFile;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,8 +15,17 @@ public final class ConfigLib extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        ConfigInstance instance = ConfigLoader.getInstance();
+
+        // Creating a new YamlFile
         YamlFile file = new YamlFile(getDataFolder(), "config.yml");
-        ConfigLoader.getInstance().createConfig(file, new ConfigExample());
+        instance.createConfig(file, new ConfigExample());
+
+        // Getting a ConfigFile instance and getting a value from it
+        ConfigFile<?> configFile = instance.getConfigFile("config.yml");
+        assert configFile == null;
+        int integer = configFile.getSerializedValue("integer-testing", Integer.class);
+        Bukkit.broadcastMessage(String.valueOf(integer));
     }
 
     @Override

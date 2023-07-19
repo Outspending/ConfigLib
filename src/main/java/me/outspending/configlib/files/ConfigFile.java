@@ -2,6 +2,7 @@ package me.outspending.configlib.files;
 
 import me.outspending.configlib.CachedConfigField;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
@@ -31,6 +32,24 @@ public interface ConfigFile<T> {
      * @return
      */
     T get();
+
+    /**
+     * Gets a value from the ConfigFile
+     *
+     * @param path
+     * @return
+     */
+    @Nullable String getValue(@NotNull String path);
+
+    /**
+     * Gets a serialized value from the ConfigFile
+     *
+     * @param path
+     * @param type
+     * @return
+     * @param <T>
+     */
+    <T> @Nullable T getSerializedValue(@NotNull String path, @NotNull Class<T> type);
 
     /**
      * Returns the File associated with ConfigFile

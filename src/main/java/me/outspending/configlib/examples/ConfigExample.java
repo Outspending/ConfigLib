@@ -32,4 +32,7 @@ public class ConfigExample implements ConfigClass {
      */
     @ConfigValue("test-testing.value")
     private String value = "ew";
+
+    @ConfigValue("integer-testing")
+    private int test = 1;
 }

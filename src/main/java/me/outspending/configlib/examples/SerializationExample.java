@@ -1,6 +1,5 @@
 package me.outspending.configlib.examples;
 
-import me.outspending.configlib.files.ConfigFile;
 import me.outspending.configlib.serialization.SerializationType;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +19,7 @@ public class SerializationExample implements SerializationType<List<String>> {
     }
 
     @Override
-    public @NotNull String serialize(List<String> value) {
+    public @NotNull String serialize(Object value) {
         return null;
     }
 }

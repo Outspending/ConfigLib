@@ -11,7 +11,7 @@ public class SerializationDoubleType implements SerializationType<Double> {
     }
 
     @Override
-    public @NotNull String serialize(Double value) {
+    public @NotNull String serialize(Object value) {
         return value.toString();
     }
 }
