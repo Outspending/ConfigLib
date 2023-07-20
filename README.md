@@ -50,6 +50,12 @@ public class ConfigExample implements ConfigClass {
 }
 ```
 Very simple isn't it :>
+## Getting ConfigFile value
+```java
+ConfigInstance instance = ConfigLoader.getInstance();
+ConfigFile<?> configFile = instance.getConfigFile("config.yml");
+int integer = configFile.getSerializedValue("integer-testing", Integer.class);
+```
 ## Registering Config Class
 ```java
 YamlFile file = new YamlFile(getDataFolder(), "config.yml");
@@ -133,7 +139,12 @@ public class SerializationExample implements SerializationType<List<String>> {
     }
 }
 ```
-
+### Registering SerilizationType
+```java
+ConfigInstance instance = ConfigLoader.getInstance();
+instance.registerSerializationType(List.class, new SerializationExample());
+```
+And that's it! Have fun
 ---
 
 That's it for now! I'm wanting to make this very customizable but for right now this is all thats customizable about it. 
