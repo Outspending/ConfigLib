@@ -36,7 +36,7 @@ public class ConfigExample implements ConfigClass {
 
     @ConfigValue("testing-value")
     @Comments({"line 1 of comment", "line 2 of comment"})
-    private String testing = "ew";
+    private String testing = "DEFAULT VALUE";
 
     /*
      * In file: test-testing:
