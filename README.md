@@ -4,7 +4,32 @@ Building Config's faster and more sustainable
 ConfigLib was creating to save your time and my time. This library is pretty fast with around `2-5ms` load times.
 If you'd like to contact me you could always ask me on discord ❤️
 
+## Adding ConfigLib to Your Project
+Adding ConfigLib to your project is very easy just a simple copy and paste :)
+### Maven
+Repository:
+```xml
+N/A
+```
+
+Dependency:
+```xml
+N/A
+```
+### Gradle
+Repository:
+```gradle
+N/A
+```
+
+Dependency:
+```gradle
+N/A
+```
+Make sure to reload your project ⚠️
+
 ## Creating Config Class
+Now you're ready to utilize this library!
 ```java
 @Config(linesBetweenValues = 5)
 public class ConfigExample implements ConfigClass {
