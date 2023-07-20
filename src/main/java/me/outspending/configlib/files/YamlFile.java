@@ -6,12 +6,10 @@ import me.outspending.configlib.serialization.SerializationType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.configuration.file.YamlConfigurationOptions;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class YamlFile implements ConfigFile<YamlConfiguration> {
@@ -33,8 +31,12 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     public <T> void addField(@NotNull String path, @NotNull CachedConfigField<?> cachedConfigField, @NotNull Class<T> Clazz) {
         Class<?> typeClass = cachedConfigField.getValueType();
         SerializationType<T> serializationType = (SerializationType<T>) SerializationHandler.getSerializationType(typeClass);
-        configuration.set(path, serializationType.serialize((T) cachedConfigField.getValue()));
+        if (serializationType == null) {
+            Bukkit.getLogger().info("[ConfigLib] There was an error while adding a field. The type " + typeClass.getSimpleName() + " is not supported.");
+            return;
+        }
 
+        configuration.set(path, serializationType.serialize((T) cachedConfigField.getValue()));
         if (cachedConfigField.hasComments()) {
             configuration.setComments(path, cachedConfigField.getComments());
         }
