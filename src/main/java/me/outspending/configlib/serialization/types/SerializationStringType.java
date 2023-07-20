@@ -11,7 +11,7 @@ public class SerializationStringType implements SerializationType<String> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(String value) {
         return String.valueOf(value);
     }
 }

@@ -11,7 +11,7 @@ public class SerializationLongType implements SerializationType<Long> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(Long value) {
         return value.toString();
     }
 }

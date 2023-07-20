@@ -11,7 +11,7 @@ public class SerializationBooleanType implements SerializationType<Boolean> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(Boolean value) {
         return value.toString();
     }
 }

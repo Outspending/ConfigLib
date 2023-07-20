@@ -14,7 +14,7 @@ public interface ConfigFile<T> {
      * @param path
      * @param cachedConfigField
      */
-    void addField(@NotNull String path, @NotNull CachedConfigField<?> cachedConfigField);
+    <T> void addField(@NotNull String path, @NotNull CachedConfigField<?> cachedConfigField, @NotNull Class<T> Clazz);
 
     /**
      * Saves the ConfigFile instance

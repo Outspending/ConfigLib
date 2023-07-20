@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ConfigLoader {
 
-    private static final Map<String, ConfigFile<?>> configFiles = new HashMap<>();
+    public static final Map<String, ConfigFile<?>> configFiles = new HashMap<>();
 
     private static @NotNull Field[] getAnnotatedFields(ConfigClass configClass) {
         List<Field> fields = new ArrayList<>();
@@ -33,7 +33,7 @@ public class ConfigLoader {
         return fields.toArray(new Field[0]);
     }
 
-    public static <V> @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass) {
+    public static @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass) {
         List<CachedConfigField<?>> configFields = new ArrayList<>();
         Class<? extends ConfigClass> clazz = configClass.getClass();
 
@@ -59,10 +59,6 @@ public class ConfigLoader {
             }
         }
         return configFields;
-    }
-
-    public static <T> T parseValue(Class<T> typeClass, String value) {
-        return SerializationHandler.parse(typeClass, value);
     }
 
     public static ConfigInstance getInstance() {

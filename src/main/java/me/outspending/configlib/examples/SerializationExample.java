@@ -19,7 +19,7 @@ public class SerializationExample implements SerializationType<List<String>> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(List<String> value) {
         return null;
     }
 }

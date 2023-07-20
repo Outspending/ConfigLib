@@ -29,10 +29,11 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     }
 
     @Override
-    public void addField(@NotNull String path, @NotNull CachedConfigField<?> cachedConfigField) {
+    @SuppressWarnings("unchecked")
+    public <T> void addField(@NotNull String path, @NotNull CachedConfigField<?> cachedConfigField, @NotNull Class<T> Clazz) {
         Class<?> typeClass = cachedConfigField.getValueType();
-        SerializationType<?> serializationType = SerializationHandler.getSerializationType(typeClass);
-        configuration.set(path, serializationType.serialize(cachedConfigField.getValue()));
+        SerializationType<T> serializationType = (SerializationType<T>) SerializationHandler.getSerializationType(typeClass);
+        configuration.set(path, serializationType.serialize((T) cachedConfigField.getValue()));
 
         if (cachedConfigField.hasComments()) {
             configuration.setComments(path, cachedConfigField.getComments());
@@ -70,11 +71,10 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     @Override
     @SuppressWarnings("unchecked")
     public <T> @Nullable T getSerializedValue(@NotNull String path, @NotNull Class<T> type) {
-        SerializationType<?> serializationType = SerializationHandler.getSerializationType(type);
+        SerializationType<T> serializationType = SerializationHandler.getSerializationType(type);
         if (serializationType == null)
             return (T) getValue(path);
-
-        return (T) serializationType.parse(getValue(path));
+        return serializationType.parse(getValue(path));
     }
 
     @Override

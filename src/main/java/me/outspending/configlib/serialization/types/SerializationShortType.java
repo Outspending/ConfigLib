@@ -11,7 +11,7 @@ public class SerializationShortType implements SerializationType<Short> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(Short value) {
         return value.toString();
     }
 }

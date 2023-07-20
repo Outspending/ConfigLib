@@ -11,7 +11,7 @@ public class SerializationByteType implements SerializationType<Byte> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(Byte value) {
         return value.toString();
     }
 }

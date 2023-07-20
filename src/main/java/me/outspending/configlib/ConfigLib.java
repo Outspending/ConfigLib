@@ -3,6 +3,8 @@ package me.outspending.configlib;
 import me.outspending.configlib.examples.ConfigExample;
 import me.outspending.configlib.files.ConfigFile;
 import me.outspending.configlib.files.YamlFile;
+import me.outspending.configlib.serialization.SerializationHandler;
+import me.outspending.configlib.serialization.SerializationType;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,9 +25,9 @@ public final class ConfigLib extends JavaPlugin {
 
         // Getting a ConfigFile instance and getting a value from it
         ConfigFile<?> configFile = instance.getConfigFile("config.yml");
-        assert configFile == null;
+        assert configFile != null;
         int integer = configFile.getSerializedValue("integer-testing", Integer.class);
-        Bukkit.broadcastMessage(String.valueOf(integer));
+        Bukkit.getLogger().info("Integer: " + integer);
     }
 
     @Override

@@ -11,7 +11,7 @@ public class SerializationFloatType implements SerializationType<Float> {
     }
 
     @Override
-    public @NotNull String serialize(Object value) {
+    public @NotNull String serialize(Float value) {
         return value.toString();
     }
 }

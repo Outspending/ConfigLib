@@ -18,5 +18,5 @@ public interface SerializationType<T> {
      * @param value
      * @return
      */
-    @NotNull String serialize(Object value);
+    @NotNull String serialize(T value);
 }
