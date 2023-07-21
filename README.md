@@ -61,6 +61,12 @@ int integer = configFile.getSerializedValue("integer-testing", Integer.class);
 YamlFile file = new YamlFile(getDataFolder(), "config.yml");
 instance.createConfig(file, new ConfigExample());
 ```
+## Registering Config Class Asynchronously
+Documentation coming soon...
+## Reloading Config Classes
+Documentation coming soon...
+## Saving Config Classes
+Documentation coming soon...
 ## Creating Custom Config Files
 ```java
 public class YamlFile implements ConfigFile<YamlConfiguration> {
