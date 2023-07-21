@@ -116,14 +116,14 @@ public final class ConfigInstance {
      *
      * @param configFile
      */
-    public synchronized void reloadConfig(@NotNull ConfigFile<?> configFile) {
+    public void reloadConfig(@NotNull ConfigFile<?> configFile) {
         configFile.reload();
     }
 
     /**
      * Reloads all config files, this method can only be used one thread at a time
      */
-    public synchronized void reloadAllConfigFiles() {
+    public void reloadAllConfigFiles() {
         for (ConfigFile<?> configFile : ConfigLoader.getConfigFiles().values()) {
             configFile.reload();
         }

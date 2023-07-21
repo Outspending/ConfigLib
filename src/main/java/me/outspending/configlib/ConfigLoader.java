@@ -135,14 +135,15 @@ public final class ConfigLoader {
 
         if (configFile.getDefaultFile().exists()) {
             Bukkit.getLogger().info("[ConfigLib] Config file " + configFile.getFileName() + " already exists, skipping creation");
-            configFile.reload();
-        } else {
-             long amountOfTime = new Timer().start(() -> {
-                ConfigCreator.writeFile(configFile, cachedFields);
-                return null;
-            }).get();
-            Bukkit.getLogger().info("[ConfigLib] Created config file " + configFile.getFileName() + " in " + amountOfTime + "ms");
+            return configFile;
         }
+
+         long amountOfTime = new Timer().start(() -> {
+            ConfigCreator.writeFile(configFile, cachedFields);
+            return null;
+        }).get();
+
+        Bukkit.getLogger().info("[ConfigLib] Created config file " + configFile.getFileName() + " in " + amountOfTime + "ms");
         return configFile;
     }
 
