@@ -1,4 +1,6 @@
 # ConfigLib
+:warning: This is outdated and needs to be updated due to the new API. Which has implemented async methods and thread-safety :warning:
+
 Building Config's faster and more sustainable
 
 ConfigLib was creating to save your time and my time. This library is pretty fast with around `2-5ms` load times.
