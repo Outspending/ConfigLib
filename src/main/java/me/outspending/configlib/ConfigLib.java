@@ -10,9 +10,8 @@ public final class ConfigLib extends JavaPlugin {
     @Override
     public void onEnable() {
         ConfigInstance instance = ConfigLoader.getInstance();
-
-        // Creating a new YamlFile
         YamlFile file = new YamlFile(getDataFolder(), "config.yml");
+
         instance.createConfigAsync(file, new ConfigExample()).thenAccept(config -> {
             int integer = config.getSerializedValue("integer-testing", Integer.class);
             Bukkit.getLogger().info("Integer: " + integer);

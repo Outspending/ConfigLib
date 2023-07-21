@@ -7,6 +7,7 @@ import me.outspending.configlib.files.ConfigFile;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -42,7 +43,7 @@ public final class ConfigLoader {
      */
     public static @NotNull Field[] getAnnotatedFields(@NotNull ConfigClass configClass) {
         List<Field> fields = new ArrayList<>();
-        Class<?> clazz = configClass.getClass();
+        Class<? extends ConfigClass> clazz = configClass.getClass();
 
         for (Field field : clazz.getDeclaredFields()) {
             ConfigValue value = field.getAnnotation(ConfigValue.class);
@@ -51,6 +52,55 @@ public final class ConfigLoader {
             }
         }
         return fields.toArray(new Field[0]);
+    }
+
+    /**
+     * This method checks if a config file has all the fields if not it will add them
+     *
+     * @param configClass
+     * @param configFile
+     * @return
+     */
+    public static @NotNull Field[] getAnnotatedFields(@NotNull ConfigClass configClass, @NotNull ConfigFile<?> configFile) {
+        List<Field> fields = new ArrayList<>();
+        Class<? extends ConfigClass> clazz = configClass.getClass();
+        for (Field field : clazz.getDeclaredFields()) {
+            ConfigValue value = field.getAnnotation(ConfigValue.class);
+            if (value != null && !Modifier.isFinal(field.getModifiers())) {
+                if (!configFile.hasPath(value.value())) {
+                    fields.add(field);
+                }
+            }
+        }
+        return fields.toArray(new Field[0]);
+    }
+
+    /**
+     * Creates an instance of {@link CachedConfigField} from a field
+     *
+     * @param configClass
+     * @param field
+     * @return
+     */
+    public static @Nullable CachedConfigField<?> createCachedConfigField(@NotNull ConfigClass configClass, @NotNull Field field) {
+        field.setAccessible(true);
+        try {
+            Object obj = field.get(configClass);
+            Objects.requireNonNull(obj, "Field " + field.getName() + " is null");
+
+            ConfigValue value = field.getAnnotation(ConfigValue.class);
+            CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), obj, configClass.getClass().getName(), obj.getClass());
+
+            if (field.isAnnotationPresent(Comments.class)) {
+                Comments annotation = field.getAnnotation(Comments.class);
+                cachedConfigField.setComments(List.of(annotation.value()));
+            }
+
+            return cachedConfigField;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -66,26 +116,9 @@ public final class ConfigLoader {
         if (!isConfigClass(clazz)) return configFields;
 
         Field[] annotatedVariables = getAnnotatedFields(configClass);
-        for (Field field : annotatedVariables) {
-            field.setAccessible(true);
+        for (Field field : annotatedVariables)
+            configFields.add(createCachedConfigField(configClass, field));
 
-            try {
-                Object obj = field.get(configClass);
-                Objects.requireNonNull(obj, "Field " + field.getName() + " is null");
-
-                ConfigValue value = field.getAnnotation(ConfigValue.class);
-                CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), obj, clazz.getName(), obj.getClass());
-
-                if (field.isAnnotationPresent(Comments.class)) {
-                    Comments annotation = field.getAnnotation(Comments.class);
-                    cachedConfigField.setComments(List.of(annotation.value()));
-                }
-
-                configFields.add(cachedConfigField);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
         return configFields;
     }
 
@@ -104,10 +137,11 @@ public final class ConfigLoader {
             Bukkit.getLogger().info("[ConfigLib] Config file " + configFile.getFileName() + " already exists, skipping creation");
             configFile.reload();
         } else {
-            long start = System.currentTimeMillis();
-            Bukkit.getLogger().info("[ConfigLib] Creating config file " + configFile.getFileName());
-            ConfigCreator.writeFile(configFile, cachedFields);
-            Bukkit.getLogger().info("[ConfigLib] Created config file " + configFile.getFileName() + " in " + (System.currentTimeMillis() - start) + "ms");
+             long amountOfTime = new Timer().start(() -> {
+                ConfigCreator.writeFile(configFile, cachedFields);
+                return null;
+            }).get();
+            Bukkit.getLogger().info("[ConfigLib] Created config file " + configFile.getFileName() + " in " + amountOfTime + "ms");
         }
         return configFile;
     }

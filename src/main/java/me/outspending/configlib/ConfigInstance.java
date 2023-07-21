@@ -85,7 +85,7 @@ public final class ConfigInstance {
      * @param configFile
      * @param configClass
      */
-    public ConfigFile<?> createConfig(@NotNull ConfigFile<?> configFile, @NotNull ConfigClass configClass) {
+    public synchronized ConfigFile<?> createConfig(@NotNull ConfigFile<?> configFile, @NotNull ConfigClass configClass) {
         return createConfig(configFile, ConfigLoader.constructClass(configClass));
     }
 
@@ -111,7 +111,19 @@ public final class ConfigInstance {
         return new File(file, fileName).exists();
     }
 
-    public void reloadAllConfigFiles() {
+    /**
+     * Reloads a config file, this method can only be used one thread at a time
+     *
+     * @param configFile
+     */
+    public synchronized void reloadConfig(@NotNull ConfigFile<?> configFile) {
+        configFile.reload();
+    }
+
+    /**
+     * Reloads all config files, this method can only be used one thread at a time
+     */
+    public synchronized void reloadAllConfigFiles() {
         for (ConfigFile<?> configFile : ConfigLoader.getConfigFiles().values()) {
             configFile.reload();
         }
@@ -163,7 +175,7 @@ public final class ConfigInstance {
     @ApiStatus.Experimental
     public CompletableFuture<Void> reloadConfigFileAsync(@NotNull ConfigFile<?> configFile) {
         return CompletableFuture.supplyAsync(() -> {
-            configFile.reload();
+            reloadConfig(configFile);
             return null;
         });
     }

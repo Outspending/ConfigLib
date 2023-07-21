@@ -77,4 +77,12 @@ public interface ConfigFile<T> {
      */
     void checkFile();
 
+    /**
+     * Checks if the ConfigFile has a path that is set
+     *
+     * @param path
+     * @return
+     */
+    boolean hasPath(@NotNull String path);
+
 }

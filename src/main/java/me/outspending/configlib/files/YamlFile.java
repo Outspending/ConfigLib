@@ -104,4 +104,9 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
             }
         }
     }
+
+    @Override
+    public boolean hasPath(@NotNull String path) {
+        return configuration.contains(path);
+    }
 }
