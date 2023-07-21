@@ -85,6 +85,11 @@ public class YamlFile implements ConfigFile<YamlConfiguration> {
     }
 
     @Override
+    public File getDefaultFile() {
+        return defaultFile;
+    }
+
+    @Override
     public String getFileName() {
         return fileName;
     }

@@ -1,7 +1,5 @@
 package me.outspending.configlib.constructors;
 
-import me.outspending.configlib.ConstructorType;
-
 /**
  * Constructors have been replaced with {@link me.outspending.configlib.files.ConfigFile}. The constructors are
  * deprecated and will be removed in a future release.

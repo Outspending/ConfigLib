@@ -1,4 +1,4 @@
-package me.outspending.configlib;
+package me.outspending.configlib.constructors;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +14,7 @@ import java.util.List;
 
 // K is the type (YamlConfiguration, FileConfiguration, etc.)
 // V is the value of CachedConfigField
+@Deprecated
 public abstract class ConstructorType<K, V> {
 
     private final List<V> configFields = new ArrayList<>();
