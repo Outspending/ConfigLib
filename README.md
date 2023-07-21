@@ -1,5 +1,5 @@
 # ConfigLib
-:warning: This is outdated and needs to be updated due to the new API. Which has implemented async methods and thread-safety :warning:
+:warning: **This is outdated and needs to be updated due to the new API. Which has implemented async methods and thread-safety** :warning:
 
 Building Config's faster and more sustainable
 
