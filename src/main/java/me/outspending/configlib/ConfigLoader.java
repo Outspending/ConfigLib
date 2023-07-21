@@ -3,24 +3,26 @@ package me.outspending.configlib;
 import me.outspending.configlib.annotations.Comments;
 import me.outspending.configlib.annotations.Config;
 import me.outspending.configlib.annotations.ConfigValue;
-import me.outspending.configlib.constructors.YamlConstructor;
 import me.outspending.configlib.files.ConfigFile;
-import me.outspending.configlib.serialization.SerializationHandler;
-import org.bukkit.Bukkit;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class ConfigLoader {
+@ApiStatus.NonExtendable
+public final class ConfigLoader {
 
     public static final Map<String, ConfigFile<?>> configFiles = new HashMap<>();
 
-    private static @NotNull Field[] getAnnotatedFields(ConfigClass configClass) {
+    public static boolean isConfigClass(@NotNull Class<?> clazz) {
+        return clazz.isAnnotationPresent(Config.class);
+    }
+
+    public static @NotNull Field[] getAnnotatedFields(@NotNull ConfigClass configClass) {
         List<Field> fields = new ArrayList<>();
         Class<?> clazz = configClass.getClass();
 
@@ -33,29 +35,31 @@ public class ConfigLoader {
         return fields.toArray(new Field[0]);
     }
 
-    public static @NotNull List<CachedConfigField<?>> constructClass(ConfigClass configClass) {
+    public static @NotNull List<CachedConfigField<?>> constructClass(@NotNull ConfigClass configClass) {
         List<CachedConfigField<?>> configFields = new ArrayList<>();
         Class<? extends ConfigClass> clazz = configClass.getClass();
 
-        if (clazz.isAnnotationPresent(Config.class)) {
-            Field[] annotatedVariables = getAnnotatedFields(configClass);
-            for (Field field : annotatedVariables) {
-                field.setAccessible(true);
+        if (!isConfigClass(clazz)) return configFields;
 
-                try {
-                    Object obj = field.get(configClass);
-                    ConfigValue value = field.getAnnotation(ConfigValue.class);
-                    CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), obj, clazz.getName());
+        Field[] annotatedVariables = getAnnotatedFields(configClass);
+        for (Field field : annotatedVariables) {
+            field.setAccessible(true);
 
-                    if (field.isAnnotationPresent(Comments.class)) {
-                        Comments annotation = field.getAnnotation(Comments.class);
-                        cachedConfigField.setComments(List.of(annotation.value()));
-                    }
+            try {
+                Object obj = field.get(configClass);
+                Objects.requireNonNull(obj, "Field " + field.getName() + " is null");
 
-                    configFields.add(cachedConfigField);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                ConfigValue value = field.getAnnotation(ConfigValue.class);
+                CachedConfigField<?> cachedConfigField = new CachedConfigField<>(value.value(), obj, clazz.getName(), obj.getClass());
+
+                if (field.isAnnotationPresent(Comments.class)) {
+                    Comments annotation = field.getAnnotation(Comments.class);
+                    cachedConfigField.setComments(List.of(annotation.value()));
                 }
+
+                configFields.add(cachedConfigField);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
         return configFields;

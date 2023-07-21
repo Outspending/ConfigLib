@@ -14,14 +14,9 @@ import java.util.List;
 
 // K is the type (YamlConfiguration, FileConfiguration, etc.)
 // V is the value of CachedConfigField
-@Deprecated
 public abstract class ConstructorType<K, V> {
 
     private final List<V> configFields = new ArrayList<>();
-
-    // TODO: Make this a FileConfiguration
-    private final File file = null;
-
     private final K key;
     private final V value;
 

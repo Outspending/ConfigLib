@@ -12,10 +12,10 @@ public class CachedConfigField<K> {
     private final Class<?> valueType;
     private final String className;
 
-    public CachedConfigField(String valueLine, K value, String className) {
+    public CachedConfigField(String valueLine, K value, String className, Class<? extends K> valueType) {
         this.valueLine = valueLine;
         this.value = value;
-        this.valueType = value.getClass();
+        this.valueType = valueType;
         this.className = className;
     }
 

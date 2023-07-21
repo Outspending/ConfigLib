@@ -36,4 +36,8 @@ public class SerializationHandler {
     public static <T> SerializationType<T> registerSerializationType(Class<T> clazz, SerializationType<T> serializationType) {
         return (SerializationType<T>) serializationMap.put(clazz, serializationType);
     }
+
+    public static Map<Class<?>, SerializationType<?>> getSerializationMap() {
+        return serializationMap;
+    }
 }

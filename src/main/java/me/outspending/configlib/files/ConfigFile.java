@@ -1,11 +1,13 @@
 package me.outspending.configlib.files;
 
 import me.outspending.configlib.CachedConfigField;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
+@ApiStatus.Internal
 public interface ConfigFile<T> {
 
     /**

@@ -19,7 +19,7 @@ import me.outspending.configlib.annotations.ConfigValue;
  * <p>
  * <li> {@code private String test = "test";} This is the default value of the field. Every value inside the config must have a default value. If not the ConfigLib will throw an error
  */
-@Config
+@Config(linesBetweenValues = 5)
 public class ConfigExample implements ConfigClass {
 
     @ConfigValue("testing-value")

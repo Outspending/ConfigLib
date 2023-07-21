@@ -9,10 +9,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Config {
     String value() default "config.yml";
+    int linesBetweenValues() default 1;
 
     @Target(ElementType.TYPE)
     @Retention(RetentionPolicy.RUNTIME)
     @interface Settings {
-        // TODO: Add support for comments
+        // TODO: Add support for settings later on
     }
 }

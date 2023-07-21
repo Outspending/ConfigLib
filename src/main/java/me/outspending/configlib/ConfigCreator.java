@@ -1,12 +1,14 @@
 package me.outspending.configlib;
 
 import me.outspending.configlib.files.ConfigFile;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.List;
 
-public class ConfigCreator {
+@ApiStatus.NonExtendable
+public final class ConfigCreator {
 
     @SuppressWarnings("unchecked")
     public static void writeFile(@NotNull ConfigFile<?> configFile, @NotNull List<CachedConfigField<?>> cachedFields) {

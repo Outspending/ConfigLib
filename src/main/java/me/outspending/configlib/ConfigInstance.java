@@ -4,6 +4,7 @@ import me.outspending.configlib.files.ConfigFile;
 import me.outspending.configlib.serialization.SerializationHandler;
 import me.outspending.configlib.serialization.SerializationType;
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,7 +12,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-public class ConfigInstance {
+@ApiStatus.NonExtendable
+public final class ConfigInstance {
 
     public <T> SerializationType<T> getSerializationType(Class<T> clazz) {
         return SerializationHandler.getSerializationType(clazz);
