@@ -8,25 +8,40 @@ If you'd like to contact me you could always ask me on discord ❤️
 
 ## Adding ConfigLib to Your Project
 Adding ConfigLib to your project is very easy just a simple copy and paste :)
+
+**Remember this is a beta build and may not be working as expected, and the documentation is limited** :warning:
 ### Maven
 Repository:
 ```xml
-N/A
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
 Dependency:
 ```xml
-N/A
+<dependency>
+    <groupId>com.github.Outspending</groupId>
+    <artifactId>ConfigLib</artifactId>
+    <version>0.0.1-BETA1</version>
+</dependency>
 ```
 ### Gradle
 Repository:
 ```gradle
-N/A
+repositories {
+    maven { url 'https://jitpack.io' }
+}
 ```
 
 Dependency:
 ```gradle
-N/A
+dependencies {
+    implementation 'com.github.Outspending:ConfigLib:0.0.1-BETA1'
+}
 ```
 Make sure to reload your project ⚠️
 
