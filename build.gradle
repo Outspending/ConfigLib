@@ -1,9 +1,11 @@
 plugins {
     id 'java'
-    id 'com.github.johnrengelman.shadow' version '7.1.1'
+    //id 'com.github.johnrengelman.shadow' version '7.1.1'
 }
 
-group = 'me.outspending'
+apply plugin: 'maven-publish'
+
+group = 'org.github.outspending'
 version = '0.0.1'
 
 repositories {
@@ -47,6 +49,19 @@ processResources {
     }
 }
 
-shadowJar {
-    destinationDirectory = file("D:\\MC Server\\plugins")
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
 }
+
+wrapper {
+    gradleVersion = "7.3.3"
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+//shadowJar {
+//    destinationDirectory = file("D:\\MC Server\\plugins")
+//}
